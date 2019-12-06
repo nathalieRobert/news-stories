@@ -1,18 +1,22 @@
 import React, { useEffect, useState} from 'react';
-import {getStoryIds, getStory} from '../Services/hnApi';
+import {getStoryIds} from '../Services/hnApi';
 import {Story} from '../components/Story';
+import {GlobalStyle, StoriesContainerWrapper} from '../Styles/StoryContainerStyles';
 
 export const StoriesContainer = () => {
     const [storyIds, setStoryIds] = useState([]);
 
     useEffect(() => {
         getStoryIds().then(data => setStoryIds(data));
-        getStory(21712883).then(data => console.log(data));;
-    }, [])
+    }, []);
 
     return (
-    storyIds.map(storyId => (
-        <Story storyId={storyId}/>
-    ))
+     <>
+        <GlobalStyle/>
+            <StoriesContainerWrapper data-test-id= "stories-container">
+                <h1>Hacker News Stories</h1>
+                {storyIds.map(storyId => ( <Story key={storyId} storyId={storyId}/>))}
+            </StoriesContainerWrapper>
+     </>
     )
 }
